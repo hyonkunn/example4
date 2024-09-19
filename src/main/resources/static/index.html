@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>회원가입</title>
+  <script src="script.js"></script>
+</head>
+<body>
+<h1>회원가입</h1>
+<input type="text" id="username" placeholder="아이디" />
+<input type="password" id="password" placeholder="비밀번호" />
+<button id="registerButton">회원가입</button>
+
+<script>
+  document.getElementById("registerButton").addEventListener("click", function() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    const userData = {
+      username: username,
+      password: password
+    };
+
+    fetch("/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(userData)
+    })
+            .then(response => response.text())
+            .then(data => {
+              alert(data); // 서버에서 받은 메시지를 alert로 표시
+            })
+            .catch(error => {
+              console.error("Error:", error);
+              alert("회원가입 중 오류가 발생했습니다.");
+            });
+  });
+</script>
+</body>
+</html>
